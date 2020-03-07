@@ -31,5 +31,6 @@ public class Book {
     @JoinTable(name = "USER_BOOK",
             joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "BOOK_ID"))
+    @JsonIgnore
     private Set<User> users;
 }

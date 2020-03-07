@@ -24,6 +24,5 @@ public class User {
     private String address;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "users")
-    @JsonIgnore
     private Set<Book> books;
 }

@@ -27,10 +27,10 @@ public class UserController {
 
 
     @GetMapping(value = "/users/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
         return ResponseEntity
                 .ok()
-                .body(userService.getUserDto(id));
+                .body(userService.getUser(id));
     }
 
     @DeleteMapping(value = "/users/{id}")
@@ -42,9 +42,9 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/")
-    public ResponseEntity<List<UserDto>> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers(){
         return ResponseEntity
                 .ok()
-                .body(userService.getUsersDto());
+                .body(userService.getUsers());
     }
 }
