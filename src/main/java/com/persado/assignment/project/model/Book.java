@@ -1,12 +1,16 @@
 package com.persado.assignment.project.model;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "BOOKS")
-@Data
+@Getter
+@Setter
 public class Book {
 
     @Id
@@ -23,7 +27,9 @@ public class Book {
 
     private int available;
 
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    @ManyToMany
+    @JoinTable(name = "USER_BOOK",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "BOOK_ID"))
+    private Set<User> users;
 }

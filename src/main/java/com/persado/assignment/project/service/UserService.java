@@ -1,11 +1,13 @@
 package com.persado.assignment.project.service;
 
+import com.persado.assignment.project.dto.UserDto;
 import com.persado.assignment.project.model.User;
 import com.persado.assignment.project.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -22,12 +24,33 @@ public class UserService {
         userRepository.delete(user);
     }
 
+    public UserDto getUserDto(Long id){
+        User user = userRepository.findUserById(id);
+        return UserDto.builder()
+                .address(user.getAddress())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .books(user.getBooks())
+                .build();
+    }
+
     public User getUser(Long id){
         return userRepository.findUserById(id);
+    }
+
+    public List<UserDto> getUsersDto(){
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(user -> UserDto.builder()
+                        .address(user.getAddress())
+                        .firstName(user.getFirstName())
+                        .lastName(user.getLastName())
+                        .books(user.getBooks())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     public List<User> getUsers(){
         return userRepository.findAll();
     }
-
 }

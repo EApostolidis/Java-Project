@@ -1,5 +1,6 @@
 package com.persado.assignment.project.controller;
 
+import com.persado.assignment.project.dto.UserDto;
 import com.persado.assignment.project.model.User;
 import com.persado.assignment.project.service.UserService;
 import lombok.AllArgsConstructor;
@@ -26,11 +27,10 @@ public class UserController {
 
 
     @GetMapping(value = "/users/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        User user = userService.getUser(id);
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         return ResponseEntity
                 .ok()
-                .body(user);
+                .body(userService.getUserDto(id));
     }
 
     @DeleteMapping(value = "/users/{id}")
@@ -42,9 +42,9 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/")
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<UserDto>> getAllUsers(){
         return ResponseEntity
                 .ok()
-                .body(userService.getUsers());
+                .body(userService.getUsersDto());
     }
 }

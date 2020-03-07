@@ -1,14 +1,16 @@
 package com.persado.assignment.project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
-@Data
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -21,7 +23,7 @@ public class User {
 
     private String address;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "users")
     @JsonIgnore
     private Set<Book> books;
 }

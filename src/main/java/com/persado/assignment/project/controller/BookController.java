@@ -2,6 +2,8 @@ package com.persado.assignment.project.controller;
 
 import com.persado.assignment.project.model.Book;
 import com.persado.assignment.project.service.BookService;
+import com.persado.assignment.project.service.ManagerService;
+import com.persado.assignment.project.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+    private final UserService userService;
+    private final ManagerService managerService;
 
     @PostMapping(value = "books/")
     public ResponseEntity<Book> addBook(@RequestBody Book book){
@@ -46,5 +50,25 @@ public class BookController {
         return ResponseEntity
                 .ok()
                 .body(bookService.getBooks());
+    }
+
+    @GetMapping(value = "/loan/")
+    public ResponseEntity<Book> loanBook(
+            @RequestParam(value = "bookId") long bookId,
+            @RequestParam(value = "userId") long userId) throws Exception {
+        Book Book = managerService.loanBook(userService.getUser(userId), bookService.getBook(bookId));
+        return ResponseEntity
+                .ok()
+                .body(Book);
+    }
+
+    @GetMapping(value = "/return/")
+    public ResponseEntity<Book> returnBook(
+            @RequestParam(value = "bookId") long bookId,
+            @RequestParam(value = "userId") long userId) {
+        Book Book = managerService.returnBook(userService.getUser(userId), bookService.getBook(bookId));
+        return ResponseEntity
+                .ok()
+                .body(Book);
     }
 }
